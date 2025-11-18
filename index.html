@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Professional LLC | Home</title>
     <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-    <!-- Removed Google reCAPTCHA script --><script>
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -94,8 +94,10 @@
         </div>
     </section>
 
-    <!-- About Section - Updated Content & Centered Flag --><section id="about" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- About Section - Updated Content & Centered Flag -->
+    <section id="about" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
+        <!-- FIX: Changed max-w-7xl to max-w-5xl for a tighter content width -->
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-dark-bg mb-10 text-center">
                 About Us
             </h2>
@@ -161,16 +163,16 @@
         </div>
     </section>
 
-    <!-- Contact Section - ID updated to contact-us --><section id="contact-us" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Contact Section - ID updated to contact-us -->
+    <section id="contact-us" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
+        <!-- FIX: Changed max-w-7xl to max-w-5xl for a tighter content width -->
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-dark-bg mb-12 text-center">
                 Get In Touch
             </h2>
-            <div class="flex flex-wrap lg:flex-nowrap gap-10">
+            <div class="flex flex-wrap gap-10">
                 
-                <!-- Contact Information Card -->
-                <!-- The w-full ensures stacking on mobile, and lg:w-1/3 sets the desktop width -->
-                <div class="w-full lg:w-1/3 bg-white p-6 rounded-xl shadow-xl flex flex-col justify-between">
+                <!-- Contact Information Card (Always w-full) --><div class="w-full bg-white p-6 rounded-xl shadow-xl flex flex-col justify-between">
                     <div>
                         <h3 class="text-2xl font-semibold text-primary-blue mb-4">Contact Details</h3>
                         
@@ -187,11 +189,9 @@
                     </div>
                 </div>
 
-                <!-- Contact Form with Math CAPTCHA -->
-                <!-- The w-full ensures stacking on mobile, and lg:w-2/3 sets the desktop width -->
-                <div class="w-full lg:w-2/3 bg-white p-8 rounded-xl shadow-xl">
+                <!-- Contact Form with Math CAPTCHA (Always w-full) --><div class="w-full bg-white p-8 rounded-xl shadow-xl">
                     <form id="contactForm" class="space-y-6">
-                        <!-- General Error Message Area --><!-- STYLING CHANGE APPLIED HERE --><p id="formGeneralError" class="text-lg font-semibold text-primary-blue bg-blue-50 p-3 rounded-lg hidden transition-all duration-300">
+                        <!-- General Error Message Area --><p id="formGeneralError" class="text-lg font-semibold text-primary-blue bg-blue-50 p-3 rounded-lg hidden transition-all duration-300">
                             <!-- Custom validation messages will appear here --></p>
                         
                         <div>
@@ -214,7 +214,7 @@
                             <!-- CAPTCHA Display --><div id="mathCaptchaContainer" class="text-xl font-mono p-3 bg-gray-100 border border-gray-300 rounded-lg mb-2 inline-block">
                                 <!-- JS will insert: X + Y = ? --></div>
                             <!-- CAPTCHA Input --><!-- 'required' restored here, but it's okay since this is the final check --><input type="number" id="mathCaptchaInput" name="captchaAnswer" placeholder="Enter the sum result" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue">
-                            <!-- Error Message --><!-- STYLING CHANGE APPLIED HERE --><p id="captchaError" class="text-sm text-primary-blue mt-2 hidden">
+                            <!-- Error Message --><p id="captchaError" class="text-sm text-primary-blue mt-2 hidden">
                                 Incorrect result. The Ministry requires mathematical precision!
                             </p>
                         </div>
@@ -375,6 +375,7 @@
                     
                     // Reset CAPTCHA for next time
                     generateCaptcha();
+                    contactForm.reset();
                     mathCaptchaInput.value = '';
                 } else {
                     // CAPTCHA failed: show error and reset input
