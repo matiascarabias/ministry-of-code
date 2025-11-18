@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Professional LLC | Home</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Removed Google reCAPTCHA script --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#3B82F6', // Blue 500
+                        'dark-bg': '#0F172A', // Slate 900
+                        'argentina-blue': '#74ACDF', // Pale Blue for the flag
+                        'argentina-gold': '#FFC300', // Sun of May Gold
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        /* Custom styles for background image and overlay to add "cool styling" */
+        .hero-background {
+            /* Using a high-quality, modern tech image URL (replace if needed) */
+            background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 0;
+        }
+        .hero-background::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.45); /* Dark overlay for better text contrast */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2; /* Ensures content sits above the overlay */
+        }
+        /* Custom Keyframes for Modal Pulse Effect - Not strictly needed now, but keeping for the modal style */
+        @keyframes pulse-shake {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-pulse-shake {
+            animation: pulse-shake 1.5s infinite;
+        }
+        /* Crucial fix to prevent any possible horizontal scrolling on mobile */
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+
+    <!-- Header & Navigation --><header class="bg-dark-bg text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tight">
+                Ministry of Code
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#about" class="hover:text-primary-blue transition duration-300">About</a>
+                <a href="#services" class="hover:text-primary-blue transition duration-300">Services</a>
+                <!-- Updated navigation link text and href --><a href="#contact-us" class="hover:text-primary-blue transition duration-300">Contact Us</a>
+            </nav>
+            <!-- Increased padding to p-3 for better mobile touch target size -->
+            <button class="md:hidden p-3 rounded-lg hover:bg-slate-700 transition duration-300">
+                <!-- Hamburger Icon (Menu Placeholder) --><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section (Now with background image and white text) --><section class="hero-background py-20 sm:py-24 lg:py-32 shadow-inner text-white">
+        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+                Welcome to Ministry of Code.
+            </h1>
+            <p class="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto">
+                Our great developers are working on getting this Ministry ready.
+            </p>
+            <!-- Button link changed to anchor tag for scrolling to the contact section --><a href="#contact-us" class="inline-block px-8 py-3 bg-primary-blue text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105">
+                Hold on or Contact us if your Anxious
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section - Updated Content & Centered Flag --><section id="about" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-dark-bg mb-10 text-center">
+                About Us
+            </h2>
+            
+            <!-- Company Description Block (Full Width) --><div class="bg-white p-8 rounded-xl shadow-xl border border-gray-100 mb-10">
+                <p class="text-2xl font-bold text-dark-bg leading-relaxed text-center">
+                    We were just born in Argentina, we are just starting, stay tuned...
+                </p>
+            </div>
+
+            <!-- Argentinian Flag Block (New, Centered, Full Width) --><div class="w-full text-center p-4">
+                <svg class="mx-auto rounded-lg shadow-2xl border border-gray-300 transform hover:scale-110 transition duration-500" 
+                     width="160" height="106.67" viewBox="0 0 9 6" xmlns="http://www.w3.org/2000/svg">
+                    
+                    <!-- Pale Blue Stripe (Top) --><rect width="9" height="2" fill="#74ACDF"/>
+                    <!-- White Stripe (Middle) --><rect y="2" width="9" height="2" fill="#FFFFFF"/>
+                    <!-- Pale Blue Stripe (Bottom) --><rect y="4" width="9" height="2" fill="#74ACDF"/>
+                    
+                    <!-- Sun of May (Centered) --><g id="SunOfMay" fill="#FFC300" transform="translate(4.5, 3)">
+                        <!-- Sun Disk (Slightly larger circle) --><circle r="0.8" fill="#FFC300"/> 
+                        <!-- 16 Rays (Simplified for clean inline SVG) --><g transform="scale(1.3)"> 
+                            <g id="ray-group">
+                                <rect x="-0.05" y="0.8" width="0.1" height="0.6" rx="0.05"/>
+                            </g>
+                            <!-- Using <use> for 16 rays spaced at 22.5 degrees --><use href="#ray-group" transform="rotate(22.5)"/>
+                            <use href="#ray-group" transform="rotate(45)"/>
+                            <use href="#ray-group" transform="rotate(67.5)"/>
+                            <use href="#ray-group" transform="rotate(90)"/>
+                            <use href="#ray-group" transform="rotate(112.5)"/>
+                            <use href="#ray-group" transform="rotate(135)"/>
+                            <use href="#ray-group" transform="rotate(157.5)"/>
+                            <use href="#ray-group" transform="rotate(180)"/>
+                            <use href="#ray-group" transform="rotate(202.5)"/>
+                            <use href="#ray-group" transform="rotate(225)"/>
+                            <use href="#ray-group" transform="rotate(247.5)"/>
+                            <use href="#ray-group" transform="rotate(270)"/>
+                            <use href="#ray-group" transform="rotate(292.5)"/>
+                            <use href="#ray-group" transform="rotate(315)"/>
+                            <use href="#ray-group" transform="rotate(337.5)"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section - Updated for a humble, WIP tone --><section id="services" class="py-16 sm:py-20 lg:py-24 bg-primary-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 text-center">
+                What We Offer
+            </h2>
+            <!-- Centering the single card --><div class="grid grid-cols-1 justify-items-center">
+                <!-- Single Service Card --><div class="bg-white p-8 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 max-w-lg w-full text-center">
+                    
+                    <!-- Analytics/Chart Icon for Process Improvement (Kept the icon as it's generic enough for "work") --><svg class="w-12 h-12 text-primary-blue mb-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 7-7M9 21h6a2 2 0 002-2v-3m-4 5h-4m-6-4h4m-4 0v-4m-6 4l4-4 4 4 6-6"></path></svg>
+                    
+                    <!-- HUMBLE DESCRIPTION (Now the main focus of the card) --><p class="text-gray-600 text-lg font-semibold">
+                        We are just a bunch of developers, we are still figuring it out... come back soon.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section - ID updated to contact-us --><section id="contact-us" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-dark-bg mb-12 text-center">
+                Get In Touch
+            </h2>
+            <div class="flex flex-wrap lg:flex-nowrap gap-10">
+                
+                <!-- Contact Information Card -->
+                <!-- The w-full ensures stacking on mobile, and lg:w-1/3 sets the desktop width -->
+                <div class="w-full lg:w-1/3 bg-white p-6 rounded-xl shadow-xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-primary-blue mb-4">Contact Details</h3>
+                        
+                        <div class="space-y-4">
+                            <p class="flex items-center text-gray-700">
+                                <!-- Email Icon --><svg class="w-6 h-6 mr-3 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-17 4v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path></svg>
+                                <strong>Email:</strong> pleasewait@ministryofcode.net
+                            </p>
+                            <p class="flex items-start text-gray-700">
+                                <!-- Location Icon --><svg class="w-6 h-6 flex-shrink-0 mr-3 text-primary-blue mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <!-- Updated line with the goat emoji 🐐 --><strong>Address:</strong> Somewhere around where Messi was born 🐐.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form with Math CAPTCHA -->
+                <!-- The w-full ensures stacking on mobile, and lg:w-2/3 sets the desktop width -->
+                <div class="w-full lg:w-2/3 bg-white p-8 rounded-xl shadow-xl">
+                    <form id="contactForm" class="space-y-6">
+                        <!-- General Error Message Area --><!-- STYLING CHANGE APPLIED HERE --><p id="formGeneralError" class="text-lg font-semibold text-primary-blue bg-blue-50 p-3 rounded-lg hidden transition-all duration-300">
+                            <!-- Custom validation messages will appear here --></p>
+                        
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <!-- 'required' removed here --><input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <!-- 'required' removed here --><input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue">
+                        </div>
+                        <div>
+                            <!-- Added id="messageLabel" --><label for="message" id="messageLabel" class="block text-sm font-medium text-gray-700 mb-1">Your Message / Inquiry</label>
+                            <!-- 'required' removed here --><textarea id="message" name="message" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue"></textarea>
+                        </div>
+
+                        <!-- Math CAPTCHA Challenge (Colon removed from text) --><div class="pt-2">
+                            <label for="mathCaptchaInput" class="block text-lg font-bold text-gray-700 mb-2">
+                                Solve the Anti-Anxiety Check
+                            </label>
+                            <!-- CAPTCHA Display --><div id="mathCaptchaContainer" class="text-xl font-mono p-3 bg-gray-100 border border-gray-300 rounded-lg mb-2 inline-block">
+                                <!-- JS will insert: X + Y = ? --></div>
+                            <!-- CAPTCHA Input --><!-- 'required' restored here, but it's okay since this is the final check --><input type="number" id="mathCaptchaInput" name="captchaAnswer" placeholder="Enter the sum result" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue">
+                            <!-- Error Message --><!-- STYLING CHANGE APPLIED HERE --><p id="captchaError" class="text-sm text-primary-blue mt-2 hidden">
+                                Incorrect result. The Ministry requires mathematical precision!
+                            </p>
+                        </div>
+
+                        <!-- Submit Button --><button type="submit" id="submitButton" class="w-full sm:w-auto px-8 py-3 bg-primary-blue text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300 transform hover:translate-y-0.5">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer --><footer class="bg-dark-bg text-gray-400 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; <span id="year"></span> Ministry of Code. All rights reserved. | Simple Website by Gemini</p>
+            <div class="flex justify-center space-x-4 mt-2">
+                <a href="#" class="hover:text-primary-blue transition duration-300 text-sm">Privacy Policy</a>
+                <a href="#" class="hover:text-primary-blue transition duration-300 text-sm">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal Popup --><div id="anxietyModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden transition-opacity duration-300 opacity-0" aria-modal="true">
+        <div class="bg-white p-10 rounded-2xl shadow-2xl max-w-md w-11/12 text-center transform scale-95 transition-transform duration-300" role="dialog" aria-labelledby="modalTitle">
+            <!-- Updated Heading: Removed red color class and aggressive text/emojis --><h2 id="modalTitle" class="text-4xl font-extrabold text-primary-blue mb-6">
+                Hold On
+            </h2>
+            <!-- TEXT CHANGE APPLIED HERE --><p class="text-xl text-gray-800 mb-8 font-medium">
+                You are too anxious, just wait or shoot a note over email.
+            </p>
+            <button id="closeModalButton" class="px-8 py-3 bg-primary-blue text-white font-semibold rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+                Okay, I'll Wait
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Global variable to store the correct CAPTCHA answer
+        let correctCaptchaAnswer = 0;
+        const captchaError = document.getElementById('captchaError');
+
+        // Function to generate the CAPTCHA math problem
+        const generateCaptcha = () => {
+            const num1 = Math.floor(Math.random() * 10) + 1; // 1 to 10
+            const num2 = Math.floor(Math.random() * 10) + 1; // 1 to 10
+            correctCaptchaAnswer = num1 + num2;
+            
+            const captchaContainer = document.getElementById('mathCaptchaContainer');
+            if (captchaContainer) {
+                captchaContainer.textContent = `${num1} + ${num2} = ?`;
+            }
+        };
+
+        // Set the current year in the footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Modal Logic
+        const anxietyModal = document.getElementById('anxietyModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const contactForm = document.getElementById('contactForm');
+        const mathCaptchaInput = document.getElementById('mathCaptchaInput');
+
+        // New elements for custom validation
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageTextarea = document.getElementById('message');
+        const messageLabel = document.getElementById('messageLabel');
+        const formGeneralError = document.getElementById('formGeneralError');
+        const originalMessageLabelText = "Your Message / Inquiry";
+        
+        // Basic email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        // Function to show modal
+        const showModal = () => {
+            anxietyModal.classList.remove('hidden');
+            // Use a short delay to trigger the opacity/scale transitions
+            setTimeout(() => {
+                anxietyModal.style.opacity = 1;
+                anxietyModal.querySelector('[role="dialog"]').classList.remove('scale-95');
+                anxietyModal.querySelector('[role="dialog"]').classList.add('scale-100');
+            }, 10);
+        };
+
+        // Function to hide modal
+        const hideModal = () => {
+            anxietyModal.style.opacity = 0;
+            anxietyModal.querySelector('[role="dialog"]').classList.remove('scale-100');
+            anxietyModal.querySelector('[role="dialog"]').classList.add('scale-95');
+            
+            // Hide completely after transition finishes
+            setTimeout(() => {
+                anxietyModal.classList.add('hidden');
+            }, 300); 
+        };
+        
+        // Setup Modal Listeners
+        if (anxietyModal && closeModalButton) {
+            closeModalButton.addEventListener('click', hideModal);
+
+            // Close when clicking outside the modal content
+            anxietyModal.addEventListener('click', (e) => {
+                if (e.target === anxietyModal) {
+                    hideModal();
+                }
+            });
+        }
+        
+        // Form Submission Logic: Checks fields, then CAPTCHA
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent the actual form submission
+                
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const message = messageTextarea.value.trim();
+                
+                // Reset errors and message label text before validation
+                formGeneralError.classList.add('hidden');
+                messageLabel.textContent = originalMessageLabelText;
+                
+                // 1. Name Validation
+                if (name === '') {
+                    formGeneralError.textContent = "We want to know your name!";
+                    formGeneralError.classList.remove('hidden');
+                    nameInput.focus();
+                    return;
+                }
+
+                // 2. Email Validation
+                if (email === '' || !emailRegex.test(email)) {
+                    formGeneralError.textContent = "How are we supposed to contact you?";
+                    formGeneralError.classList.remove('hidden');
+                    emailInput.focus();
+                    return;
+                }
+
+                // 3. Message Validation (Label text is now preserved)
+                if (message === '') {
+                    // Validation message now includes "Ugh?" in the blue message box only.
+                    formGeneralError.textContent = "Ugh? You forgot to write a message.";
+                    formGeneralError.classList.remove('hidden');
+                    messageTextarea.focus();
+                    return;
+                }
+
+
+                // --- Proceed to CAPTCHA Check (Anti-Anxiety Check) ---
+                
+                const userAnswer = parseInt(mathCaptchaInput.value, 10);
+                
+                if (userAnswer === correctCaptchaAnswer) {
+                    // CAPTCHA solved correctly: show the modal (simulating success)
+                    captchaError.classList.add('hidden');
+                    showModal();
+                    
+                    // Reset CAPTCHA for next time
+                    generateCaptcha();
+                    mathCaptchaInput.value = '';
+                } else {
+                    // CAPTCHA failed: show error and reset input
+                    captchaError.classList.remove('hidden');
+                    mathCaptchaInput.value = ''; // Clear the input field
+                    generateCaptcha(); // Generate a new problem
+                }
+            });
+        }
+
+        // Initialize the CAPTCHA on page load
+        generateCaptcha();
+
+
+        // Simple script to handle navigation for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
