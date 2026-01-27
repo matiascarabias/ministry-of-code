@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced CORS & Header Checker</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; line-height: 1.6; max-width: 800px; margin: auto; background: #f4f7f6; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        input, select { width: 100%; padding: 10px; margin: 8px 0 15px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px; font-weight: bold; }
+        button:hover { background: #218838; }
+        #output, #headerOutput { margin-top: 20px; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-family: monospace; font-size: 0.9em; border: 1px solid #ddd; }
+        .success { background: #e6ffed; border-color: #34d058; }
+        .error { background: #ffeef0; border-color: #d73a49; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>CORS & Header Inspector</h2>
+    
+    <label>Target URL:</label>
+    <input type="text" id="urlInput" value="https://jsonplaceholder.typicode.com/todos/1">
+
+    <label>Request Mode:</label>
+    <select id="modeInput">
+        <option value="cors">cors (Standard - follows security rules)</option>
+        <option value="no-cors">no-cors (Opaque response - won't show body/headers)</option>
+    </select>
+
+    <p><small><em>Note: You cannot manually set the <strong>Origin</strong> header via JS; the browser sets this to <code>document.location.origin</code> automatically.</em></small></p>
+    
+    <button onclick="testRequest()">Send GET Request</button>
+
+    <h3>Response Headers</h3>
+    <table id="headerTable">
+        <thead>
+            <tr><th>Header</th><th>Value</th></tr>
+        </thead>
+        <tbody id="headerBody">
+            <tr><td colspan="2" style="text-align:center">No data yet</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Response Body</h3>
+    <div id="output">Results will appear here...</div>
+</div>
+
+<script>
+    async function testRequest() {
+        const url = document.getElementById('urlInput').value;
+        const mode = document.getElementById('modeInput').value;
+        const output = document.getElementById('output');
+        const headerBody = document.getElementById('headerBody');
+        
+        output.className = '';
+        output.textContent = 'Fetching...';
+        headerBody.innerHTML = '';
+
+        try {
+            const response = await fetch(url, { method: 'GET', mode: mode });
+
+            // Populate Headers
+            let headerRows = '';
+            response.headers.forEach((value, key) => {
+                headerRows += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
+            });
+            headerBody.innerHTML = headerRows || '<tr><td colspan="2">No headers exposed (check CORS settings)</td></tr>';
+
+            // Handle Body
+            if (mode === 'no-cors') {
+                output.className = 'success';
+                output.textContent = "Opaque Response received. In 'no-cors' mode, JavaScript cannot read the body or headers for security.";
+            } else if (response.ok) {
+                const data = await response.json();
+                output.className = 'success';
+                output.textContent = JSON.stringify(data, null, 2);
+            } else {
+                output.className = 'error';
+                output.textContent = `Server error: ${response.status}`;
+            }
+        } catch (err) {
+            output.className = 'error';
+            output.textContent = `CORS Blocked or Network Error.\n\nBrowser Console usually shows: "Access-Control-Allow-Origin" missing.`;
+            headerBody.innerHTML = '<tr><td colspan="2" style="color:red">Request failed. Headers inaccessible.</td></tr>';
+        }
+    }
+</script>
+</body>
+</html>
