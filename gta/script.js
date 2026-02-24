@@ -28,22 +28,23 @@ async function init() {
 
 function renderProducts(items) {
     const grid = document.getElementById('productGrid');
+    
     grid.innerHTML = items.map(item => {
         const icon = icons[item.category] || icons.generic;
-        const stock = Math.floor(Math.random() * 5) + 1; // Randomized urgency logic
+        
+        // SAFETY FIX: If price is missing, use 0
+        const displayPrice = item.price ? item.price.toLocaleString() : "0.00";
 
         return `
             <div class="card">
                 <div class="card-icon-container">
                     ${icon}
-                    ${item.type === 'sale' ? '<span class="badge sale">SALE</span>' : ''}
                 </div>
                 <div class="card-content">
-                    <div class="stock-indicator">ONLY ${stock} UNITS LEFT</div>
                     <p class="brand">${item.brand}</p>
                     <h3>${item.part}</h3>
                     <div class="card-footer">
-                        <span class="price">$${item.price.toLocaleString()}</span>
+                        <span class="price">$${displayPrice}</span>
                         <button class="add-btn" onclick="addToCart('${item.sku}')">ADD_UNIT</button>
                     </div>
                 </div>
@@ -51,7 +52,6 @@ function renderProducts(items) {
         `;
     }).join('');
 }
-
 // Global Filter Logic
 window.filterByCategory = function(category, element) {
     currentCategory = category;
@@ -102,4 +102,48 @@ window.removeFromCart = (i) => { cart.splice(i, 1); updateUI(); };
 window.toggleCart = () => document.getElementById('cartSidebar').classList.toggle('active');
 window.checkout = () => { alert("ORDER TRANSMITTED."); cart = []; updateUI(); toggleCart(); };
 
-init();
+async function init() {
+    const grid = document.getElementById('productGrid');
+    const vendorFiles = ['vendor1.json', 'vendor2.json', 'vendor3.json'];
+    
+    // Clear array before loading
+    allProducts = [];
+
+    // Map through each file and load individually to catch specific errors
+    const loadPromises = vendorFiles.map(file => validateAndLoad(file));
+    
+    const results = await Promise.all(loadPromises);
+    
+    // Flatten the array (removing any nulls from failed files)
+    allProducts = results.filter(data => data !== null).flat();
+
+    if (allProducts.length > 0) {
+        renderProducts(allProducts);
+    } else {
+        grid.innerHTML = `<p style="text-align:center; color:red;">CRITICAL ERROR: No valid data found in any vendor files.</p>`;
+    }
+}
+
+async function validateAndLoad(fileName) {
+    try {
+        const response = await fetch(fileName);
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        
+        const data = await response.json();
+
+        // Check every item in this specific file for the 'price' property
+        data.forEach((item, index) => {
+            if (item.price === undefined || item.price === null) {
+                console.error(`%c DATA ERROR in ${fileName}:`, 'color: white; background: red; font-weight: bold;', 
+                `Item at index ${index} (${item.part || 'Unknown Part'}) is missing a "price" field.`);
+            }
+        });
+
+        console.log(`%c ✓ ${fileName} loaded successfully`, 'color: #00f2ff');
+        return data;
+
+    } catch (err) {
+        console.error(`%c ✘ FAILED TO LOAD ${fileName}:`, 'color: white; background: #ff2d2d; font-weight: bold;', err.message);
+        return null; // Return null so the rest of the app doesn't crash
+    }
+}
