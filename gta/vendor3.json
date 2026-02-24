@@ -1,18 +1,7 @@
 [
-  {
-    "brand": "Brembo", 
-    "part": "GT Series Brake System", 
-    "price": 2100.00, 
-    "sku": "BRM-GT", 
-    "type": "popular", 
-    "img": "https://images.unsplash.com/photo-1549443105-325b90907e33?q=80&w=600"
-  },
-  {
-    "brand": "Akrapovič", 
-    "part": "Slip-On Line Exhaust", 
-    "price": 3200.00, 
-    "sku": "AKR-SLIP", 
-    "type": "sale", 
-    "img": "https://images.unsplash.com/photo-1600706432502-77a0e2e327fc?q=80&w=600"
-  }
+  {"brand": "Brembo", "part": "GT Brake Kit", "price": 2100.00, "sku": "BRM-GT", "type": "popular", "category": "brakes"},
+  {"brand": "Akrapovič", "part": "Exhaust System", "price": 3200.00, "sku": "AKR-SLIP", "type": "sale", "category": "exhaust"},
+  {"brand": "Ohlins", "part": "DFV Coilovers", "price": 2450.00, "sku": "OHL-DFV", "type": "popular", "category": "brakes"},
+  {"brand": "Borla", "part": "S-Type Catback", "price": 1150.00, "sku": "BOR-STY", "type": "sale", "category": "exhaust"},
+  {"brand": "Eibach", "part": "Anti-Roll Kit", "price": 480.00, "sku": "EIB-ARK", "type": "standard", "category": "brakes"}
 ]

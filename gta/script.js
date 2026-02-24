@@ -2,132 +2,104 @@ let allProducts = [];
 let cart = [];
 let currentCategory = 'all';
 
-// 1. Initial Data Fetch
+// Vector Icon Set
+const icons = {
+    turbo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="4"/><path d="M12 8v8M8 12h8"/></svg>`,
+    engine: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10h18M7 10V6M11 10V6M15 10V6M19 10V6M5 10v10h14V10M8 14h8M8 17h8"/></svg>`,
+    brakes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 12L3 12M12 7l-2 5 2 5"/></svg>`,
+    exhaust: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 17h4m0 0a3 3 0 106 0m-6 0v-5a3 3 0 013-3h1m0 0a3 3 0 106 0m-6 0v5a3 3 0 003 3h4"/></svg>`,
+    valve: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14m-4 0h8v4a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4z"/></svg>`,
+    generic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>`
+};
+
 async function init() {
     try {
-        // Fetching from your 3 separate JSON files
         const [v1, v2, v3] = await Promise.all([
             fetch('vendor1.json').then(res => res.json()),
             fetch('vendor2.json').then(res => res.json()),
             fetch('vendor3.json').then(res => res.json())
         ]);
-        
         allProducts = [...v1, ...v2, ...v3];
         renderProducts(allProducts);
     } catch (e) {
-        console.error("Data load error. Ensure you are using a local server!", e);
-        document.getElementById('productGrid').innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
-                <p>⚠️ JSON files must be accessed via a local server (e.g., Live Server in VS Code).</p>
-            </div>`;
+        console.error("Connection Error. Ensure Live Server is used.", e);
     }
 }
 
-// 2. The Core Render Function
-function renderProducts(productsToDisplay) {
+function renderProducts(items) {
     const grid = document.getElementById('productGrid');
-    
-    if (productsToDisplay.length === 0) {
-        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">No matching parts found.</p>`;
-        return;
-    }
+    grid.innerHTML = items.map(item => {
+        const icon = icons[item.category] || icons.generic;
+        const stock = Math.floor(Math.random() * 5) + 1; // Randomized urgency logic
 
-    grid.innerHTML = productsToDisplay.map(item => `
-        <div class="card">
-            <div class="card-img-container">
-                <img src="${item.img}" alt="${item.part}">
-                ${item.type === 'sale' ? '<span class="badge sale">SALE</span>' : ''}
-                ${item.type === 'popular' ? '<span class="badge popular">HOT</span>' : ''}
-            </div>
-            <div class="card-content">
-                <p class="brand">${item.brand}</p>
-                <h3 class="part-name">${item.part}</h3>
-                <div class="card-footer">
-                    <span class="price">$${item.price.toLocaleString()}</span>
-                    <button class="add-btn" onclick="addToCart('${item.sku}')">ADD</button>
+        return `
+            <div class="card">
+                <div class="card-icon-container">
+                    ${icon}
+                    ${item.type === 'sale' ? '<span class="badge sale">SALE</span>' : ''}
+                </div>
+                <div class="card-content">
+                    <div class="stock-indicator">ONLY ${stock} UNITS LEFT</div>
+                    <p class="brand">${item.brand}</p>
+                    <h3>${item.part}</h3>
+                    <div class="card-footer">
+                        <span class="price">$${item.price.toLocaleString()}</span>
+                        <button class="add-btn" onclick="addToCart('${item.sku}')">ADD_UNIT</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
-// 3. Filtering Logic (Category)
+// Global Filter Logic
 window.filterByCategory = function(category, element) {
     currentCategory = category;
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
-    applyAllFilters();
+    applyFilters();
 };
 
-// 4. Combined Filtering (Search + Category + Price)
-function applyAllFilters() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const maxPrice = document.getElementById('priceRange').value;
-
-    let filtered = allProducts.filter(p => {
-        const matchesCategory = currentCategory === 'all' || p.type === currentCategory;
-        const matchesSearch = p.brand.toLowerCase().includes(searchTerm) || p.part.toLowerCase().includes(searchTerm);
-        const matchesPrice = p.price <= maxPrice;
-        return matchesCategory && matchesSearch && matchesPrice;
+function applyFilters() {
+    const term = document.getElementById('searchInput').value.toLowerCase();
+    const max = document.getElementById('priceRange').value;
+    const filtered = allProducts.filter(p => {
+        const catMatch = currentCategory === 'all' || p.type === currentCategory;
+        const searchMatch = p.brand.toLowerCase().includes(term) || p.part.toLowerCase().includes(term);
+        const priceMatch = p.price <= max;
+        return catMatch && searchMatch && priceMatch;
     });
-
     renderProducts(filtered);
 }
 
-// Event Listeners for Filter Inputs
-document.getElementById('searchInput').addEventListener('input', applyAllFilters);
+document.getElementById('searchInput').addEventListener('input', applyFilters);
 document.getElementById('priceRange').addEventListener('input', (e) => {
     document.getElementById('priceLabel').innerText = e.target.value;
-    applyAllFilters();
+    applyFilters();
 });
 
-// 5. Cart Management
-window.addToCart = function(sku) {
-    const product = allProducts.find(p => p.sku === sku);
-    cart.push(product);
-    updateCartUI();
-    
-    // Animate cart count
-    const counter = document.getElementById('cartCount');
-    counter.style.transform = "scale(1.4)";
-    setTimeout(() => counter.style.transform = "scale(1)", 200);
+// Cart Controls
+window.addToCart = (sku) => {
+    const item = allProducts.find(p => p.sku === sku);
+    cart.push(item);
+    updateUI();
 };
 
-function updateCartUI() {
-    const cartItems = document.getElementById('cartItems');
-    const totalPrice = document.getElementById('totalPrice');
+function updateUI() {
     document.getElementById('cartCount').innerText = cart.length;
-    
-    cartItems.innerHTML = cart.map((item, index) => `
+    const list = document.getElementById('cartItems');
+    list.innerHTML = cart.map((item, i) => `
         <div class="cart-item">
-            <div>
-                <h4>${item.part}</h4>
-                <p>$${item.price.toLocaleString()}</p>
-            </div>
-            <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+            <span>${item.part}</span>
+            <button onclick="removeFromCart(${i})">✕</button>
         </div>
     `).join('');
-
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    totalPrice.innerText = `$${total.toLocaleString()}`;
+    const total = cart.reduce((s, i) => s + i.price, 0);
+    document.getElementById('totalPrice').innerText = `$${total.toLocaleString()}`;
 }
 
-window.removeFromCart = function(index) {
-    cart.splice(index, 1);
-    updateCartUI();
-};
+window.removeFromCart = (i) => { cart.splice(i, 1); updateUI(); };
+window.toggleCart = () => document.getElementById('cartSidebar').classList.toggle('active');
+window.checkout = () => { alert("ORDER TRANSMITTED."); cart = []; updateUI(); toggleCart(); };
 
-window.toggleCart = function() {
-    document.getElementById('cartSidebar').classList.toggle('active');
-};
-
-window.checkout = function() {
-    if(cart.length === 0) return alert("Your garage is empty!");
-    alert("Order Received! Shipping parts to your location.");
-    cart = [];
-    updateCartUI();
-    toggleCart();
-};
-
-// Start
 init();

@@ -1,13 +1,7 @@
 [
-  [
-  {
-    "brand": "JE Pistons", 
-    "part": "Forged Piston Set (86mm)", 
-    "price": 899.99, 
-    "sku": "JEP-86M", 
-    "type": "sale", 
-    "img": "https://images.unsplash.com/photo-1615906659444-1aa27ae45e45?q=80&w=600"
-  }
-],
-  {"brand": "Ferrea", "part": "Competition Plus Valves", "price": 420.00, "sku": "FER-CPV", "type": "popular", "img": "https://images.unsplash.com/photo-1489824904134-891ab64532f1?q=80&w=400"}
+  {"brand": "JE Pistons", "part": "Forged Pistons", "price": 899.99, "sku": "JEP-86M", "type": "sale", "category": "engine"},
+  {"brand": "Eagle", "part": "H-Beam Rods", "price": 550.00, "sku": "EAG-HBM", "type": "standard", "category": "engine"},
+  {"brand": "Brian Crower", "part": "Stage 2 Camshafts", "price": 720.00, "sku": "BC-CAM2", "type": "popular", "category": "engine"},
+  {"brand": "Injector Dynamics", "part": "1050cc Injectors", "price": 640.00, "sku": "ID-1050", "type": "popular", "category": "valve"},
+  {"brand": "Radium", "part": "Fuel Rail Kit", "price": 210.00, "sku": "RAD-FRK", "type": "sale", "category": "engine"}
 ]

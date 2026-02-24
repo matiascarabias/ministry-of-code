@@ -1,13 +1,7 @@
 [
-  [
-  {
-    "brand": "Garrett", 
-    "part": "G-Series G35-900 Turbo", 
-    "price": 2450.00, 
-    "sku": "GAR-G35", 
-    "type": "popular", 
-    "img": "https://images.unsplash.com/photo-1635835252327-77f68f5a546c?q=80&w=600"
-  }
-],
-  {"brand": "Tial", "part": "MVR 44mm Wastegate", "price": 385.00, "sku": "TIA-MVR", "type": "standard", "img": "https://images.unsplash.com/photo-1486001021044-f20366657904?q=80&w=400"}
+  {"brand": "Garrett", "part": "G-Series Turbo", "price": 2450.00, "sku": "GAR-G35", "type": "popular", "category": "turbo"},
+  {"brand": "Tial", "part": "44mm Wastegate", "price": 385.00, "sku": "TIA-MVR", "type": "standard", "category": "valve"},
+  {"brand": "Precision", "part": "6266 Gen2 Turbo", "price": 1850.00, "sku": "PRE-626", "type": "popular", "category": "turbo"},
+  {"brand": "Mishimoto", "part": "Intercooler Core", "price": 450.00, "sku": "MIS-INT", "type": "sale", "category": "exhaust"},
+  {"brand": "HKS", "part": "SSQV4 Blow Off Valve", "price": 260.00, "sku": "HKS-SSQ", "type": "standard", "category": "valve"}
 ]
