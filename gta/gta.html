@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REVV | Performance Database</title>
+    <title>REVV | Performance Parts</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 </head>
@@ -12,27 +12,27 @@
     <nav>
         <div class="logo" onclick="location.reload()">REVV<span>.</span></div>
         <div class="nav-center">
-            <input type="text" id="searchInput" placeholder="SEARCH DATABASE...">
+            <input type="text" id="searchInput" placeholder="Search brands, parts, or SKUs...">
         </div>
         <div class="nav-right">
             <button class="cart-trigger-btn" onclick="toggleCart()">
-                GARAGE_MANIFEST [<span id="cartCount">0</span>]
+                VIEW GARAGE (<span id="cartCount">0</span>)
             </button>
         </div>
     </nav>
 
     <header>
         <div class="hero-content">
-            <h1 class="typewriter">SYSTEM_READY: <span>LOADED</span></h1>
+            <h1 class="typewriter">Build Your <span>Dream</span></h1>
             <div class="controls-container">
                 <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterByCategory('all', this)">ALL_SYSTEMS</button>
-                    <button class="filter-btn" onclick="filterByCategory('popular', this)">⚡ POPULAR</button>
-                    <button class="filter-btn" onclick="filterByCategory('sale', this)">🏷️ DISCOUNT</button>
+                    <button class="filter-btn active" onclick="filterByCategory('all', this)">All Parts</button>
+                    <button class="filter-btn" onclick="filterByCategory('popular', this)">🔥 Popular</button>
+                    <button class="filter-btn" onclick="filterByCategory('sale', this)">🏷️ Special Offers</button>
                 </div>
 
                 <div class="price-filter-box">
-                    <label>MAX_BUDGET: <span>$</span><span id="priceLabel">6000</span></label>
+                    <label>Budget Limit: <span>$</span><span id="priceLabel">6000</span></label>
                     <input type="range" id="priceRange" min="0" max="6000" step="50" value="6000">
                 </div>
             </div>
@@ -43,13 +43,13 @@
 
     <div id="cartSidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>GARAGE_MANIFEST</h2>
+            <h2>Your Garage</h2>
             <button class="close-sidebar-btn" onclick="toggleCart()">✕</button>
         </div>
         <div id="cartItems"></div>
         <div class="cart-footer">
-            <div class="total">TOTAL_VAL: <span id="totalPrice">$0.00</span></div>
-            <button class="checkout-btn" onclick="checkout()">SYNC_AND_ORDER</button>
+            <div class="total">Total: <span id="totalPrice">$0.00</span></div>
+            <button class="checkout-btn" onclick="checkout()">Place Order</button>
         </div>
     </div>
 
