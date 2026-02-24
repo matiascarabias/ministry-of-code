@@ -61,31 +61,28 @@ async function init() {
 }
 
 // 3. UI RENDERING (PURE ICON LOGIC)
+// ... (Icon set and validateAndLoad functions remain exactly the same as previous)
+
 function renderProducts(items) {
     const grid = document.getElementById('productGrid');
     
     grid.innerHTML = items.map(item => {
-        // Find icon based on category, fallback to generic
         const iconMarkup = icons[item.category] || icons.generic;
-        
-        // Safety check for price to prevent toLocaleString() crash
         const formattedPrice = (typeof item.price === 'number') 
             ? item.price.toLocaleString() 
-            : "N/A";
+            : "0.00";
 
         return `
             <div class="card">
                 <div class="card-icon-container">
                     ${iconMarkup}
-                    ${item.type === 'sale' ? '<span class="badge sale">SALE</span>' : ''}
-                    ${item.type === 'popular' ? '<span class="badge popular">HOT</span>' : ''}
                 </div>
                 <div class="card-content">
-                    <p class="brand">${item.brand || 'UNKNOWN'}</p>
-                    <h3 class="part-name">${item.part || 'UNNAMED_COMPONENT'}</h3>
+                    <p class="brand">${item.brand || 'DATABASE_ERR'}</p>
+                    <h3 class="part-name">${item.part || 'UNKNOWN_UNIT'}</h3>
                     <div class="card-footer">
                         <span class="price">$${formattedPrice}</span>
-                        <button class="add-btn" onclick="addToCart('${item.sku}')">ADD_UNIT</button>
+                        <button class="add-btn" onclick="addToCart('${item.sku}')">INSTALL</button>
                     </div>
                 </div>
             </div>
@@ -93,6 +90,7 @@ function renderProducts(items) {
     }).join('');
 }
 
+// ... (Rest of the functions: filterByCategory, applyFilters, addToCart, etc. remain the same)
 // 4. FILTERING LOGIC
 window.filterByCategory = function(category, element) {
     currentCategory = category;

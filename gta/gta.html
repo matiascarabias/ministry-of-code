@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REVV | Performance Parts Database</title>
+    <title>REVV | Performance Database</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 </head>
@@ -15,21 +15,19 @@
             <input type="text" id="searchInput" placeholder="SEARCH DATABASE...">
         </div>
         <div class="nav-right">
-            <div class="cart-trigger" onclick="toggleCart()">
-                GARAGE <span id="cartCount">0</span>
-            </div>
+            <button class="cart-trigger-btn" onclick="toggleCart()">
+                GARAGE_MANIFEST [<span id="cartCount">0</span>]
+            </button>
         </div>
     </nav>
 
     <header>
         <div class="hero-content">
             <h1 class="typewriter">SYSTEM_READY: <span>LOADED</span></h1>
-            <p class="subtitle">PREMIUM COMPONENTS FOR ELITE BUILDS</p>
-            
             <div class="controls-container">
                 <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterByCategory('all', this)">ALL_UNITS</button>
-                    <button class="filter-btn" onclick="filterByCategory('popular', this)">🔥 POPULAR</button>
+                    <button class="filter-btn active" onclick="filterByCategory('all', this)">ALL_SYSTEMS</button>
+                    <button class="filter-btn" onclick="filterByCategory('popular', this)">⚡ POPULAR</button>
                     <button class="filter-btn" onclick="filterByCategory('sale', this)">🏷️ DISCOUNT</button>
                 </div>
 
@@ -46,12 +44,12 @@
     <div id="cartSidebar" class="sidebar">
         <div class="sidebar-header">
             <h2>GARAGE_MANIFEST</h2>
-            <button class="close-btn" onclick="toggleCart()">✕</button>
+            <button class="close-sidebar-btn" onclick="toggleCart()">✕</button>
         </div>
         <div id="cartItems"></div>
         <div class="cart-footer">
             <div class="total">TOTAL_VAL: <span id="totalPrice">$0.00</span></div>
-            <button class="checkout-btn" onclick="checkout()">CONFIRM_ORDER</button>
+            <button class="checkout-btn" onclick="checkout()">SYNC_AND_ORDER</button>
         </div>
     </div>
 
