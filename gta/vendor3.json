@@ -1,4 +1,18 @@
 [
-  {"brand": "Akrapovič", "part": "Evolution Line Exhaust", "price": 5200.00, "sku": "AKR-EVO", "type": "popular", "img": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=400"},
-  {"brand": "Mishimoto", "part": "Performance Aluminum Radiator", "price": 345.00, "sku": "MIS-RAD", "type": "sale", "img": "https://images.unsplash.com/photo-1532581133564-9ca29e55f659?q=80&w=400"}
+  {
+    "brand": "Brembo", 
+    "part": "GT Series Brake System", 
+    "price": 2100.00, 
+    "sku": "BRM-GT", 
+    "type": "popular", 
+    "img": "https://images.unsplash.com/photo-1549443105-325b90907e33?q=80&w=600"
+  },
+  {
+    "brand": "Akrapovič", 
+    "part": "Slip-On Line Exhaust", 
+    "price": 3200.00, 
+    "sku": "AKR-SLIP", 
+    "type": "sale", 
+    "img": "https://images.unsplash.com/photo-1600706432502-77a0e2e327fc?q=80&w=600"
+  }
 ]

@@ -1,40 +1,47 @@
 let allProducts = [];
 let cart = [];
+let currentCategory = 'all';
 
-// 1. Fetching logic for separate JSON files
-async function loadVendors() {
+// 1. Initial Data Fetch
+async function init() {
     try {
-        // These paths assume the JSON files are in the same folder as index.html
-        const paths = ['vendor1.json', 'vendor2.json', 'vendor3.json'];
+        // Fetching from your 3 separate JSON files
+        const [v1, v2, v3] = await Promise.all([
+            fetch('vendor1.json').then(res => res.json()),
+            fetch('vendor2.json').then(res => res.json()),
+            fetch('vendor3.json').then(res => res.json())
+        ]);
         
-        const fetchPromises = paths.map(path => 
-            fetch(path).then(res => {
-                if (!res.ok) throw new Error(`Failed to load ${path}`);
-                return res.json();
-            })
-        );
-
-        const results = await Promise.all(fetchPromises);
-        allProducts = results.flat(); // Combines the 3 arrays into one
+        allProducts = [...v1, ...v2, ...v3];
         renderProducts(allProducts);
-    } catch (error) {
-        console.error("Error loading JSON:", error);
-        document.getElementById('productGrid').innerHTML = `<p>Error loading parts. Check console.</p>`;
+    } catch (e) {
+        console.error("Data load error. Ensure you are using a local server!", e);
+        document.getElementById('productGrid').innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                <p>⚠️ JSON files must be accessed via a local server (e.g., Live Server in VS Code).</p>
+            </div>`;
     }
 }
 
-// 2. Rendering
-function renderProducts(data) {
+// 2. The Core Render Function
+function renderProducts(productsToDisplay) {
     const grid = document.getElementById('productGrid');
-    grid.innerHTML = data.map(item => `
+    
+    if (productsToDisplay.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">No matching parts found.</p>`;
+        return;
+    }
+
+    grid.innerHTML = productsToDisplay.map(item => `
         <div class="card">
             <div class="card-img-container">
                 <img src="${item.img}" alt="${item.part}">
                 ${item.type === 'sale' ? '<span class="badge sale">SALE</span>' : ''}
+                ${item.type === 'popular' ? '<span class="badge popular">HOT</span>' : ''}
             </div>
             <div class="card-content">
                 <p class="brand">${item.brand}</p>
-                <h3>${item.part}</h3>
+                <h3 class="part-name">${item.part}</h3>
                 <div class="card-footer">
                     <span class="price">$${item.price.toLocaleString()}</span>
                     <button class="add-btn" onclick="addToCart('${item.sku}')">ADD</button>
@@ -44,43 +51,83 @@ function renderProducts(data) {
     `).join('');
 }
 
-// 3. Filtering & Search
-window.filterProducts = (category, btn) => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filtered = category === 'all' ? allProducts : allProducts.filter(p => p.type === category);
+// 3. Filtering Logic (Category)
+window.filterByCategory = function(category, element) {
+    currentCategory = category;
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    element.classList.add('active');
+    applyAllFilters();
+};
+
+// 4. Combined Filtering (Search + Category + Price)
+function applyAllFilters() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const maxPrice = document.getElementById('priceRange').value;
+
+    let filtered = allProducts.filter(p => {
+        const matchesCategory = currentCategory === 'all' || p.type === currentCategory;
+        const matchesSearch = p.brand.toLowerCase().includes(searchTerm) || p.part.toLowerCase().includes(searchTerm);
+        const matchesPrice = p.price <= maxPrice;
+        return matchesCategory && matchesSearch && matchesPrice;
+    });
+
     renderProducts(filtered);
-};
-
-document.getElementById('searchInput').addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase();
-    renderProducts(allProducts.filter(p => 
-        p.brand.toLowerCase().includes(term) || p.part.toLowerCase().includes(term)
-    ));
-});
-
-// 4. Cart logic
-window.addToCart = (sku) => {
-    const item = allProducts.find(p => p.sku === sku);
-    cart.push(item);
-    updateUI();
-};
-
-function updateUI() {
-    document.getElementById('cartCount').innerText = cart.length;
-    const list = document.getElementById('cartItems');
-    list.innerHTML = cart.map((item, i) => `
-        <div class="cart-item">
-            <span>${item.part}</span>
-            <button onclick="removeFromCart(${i})">Remove</button>
-        </div>
-    `).join('');
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    document.getElementById('totalPrice').innerText = `$${total.toLocaleString()}`;
 }
 
-window.removeFromCart = (i) => { cart.splice(i, 1); updateUI(); };
-window.toggleCart = () => document.getElementById('cartSidebar').classList.toggle('active');
-window.checkout = () => { alert("Order processed!"); cart = []; updateUI(); toggleCart(); };
+// Event Listeners for Filter Inputs
+document.getElementById('searchInput').addEventListener('input', applyAllFilters);
+document.getElementById('priceRange').addEventListener('input', (e) => {
+    document.getElementById('priceLabel').innerText = e.target.value;
+    applyAllFilters();
+});
 
-loadVendors();
+// 5. Cart Management
+window.addToCart = function(sku) {
+    const product = allProducts.find(p => p.sku === sku);
+    cart.push(product);
+    updateCartUI();
+    
+    // Animate cart count
+    const counter = document.getElementById('cartCount');
+    counter.style.transform = "scale(1.4)";
+    setTimeout(() => counter.style.transform = "scale(1)", 200);
+};
+
+function updateCartUI() {
+    const cartItems = document.getElementById('cartItems');
+    const totalPrice = document.getElementById('totalPrice');
+    document.getElementById('cartCount').innerText = cart.length;
+    
+    cartItems.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+            <div>
+                <h4>${item.part}</h4>
+                <p>$${item.price.toLocaleString()}</p>
+            </div>
+            <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+        </div>
+    `).join('');
+
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    totalPrice.innerText = `$${total.toLocaleString()}`;
+}
+
+window.removeFromCart = function(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+};
+
+window.toggleCart = function() {
+    document.getElementById('cartSidebar').classList.toggle('active');
+};
+
+window.checkout = function() {
+    if(cart.length === 0) return alert("Your garage is empty!");
+    alert("Order Received! Shipping parts to your location.");
+    cart = [];
+    updateCartUI();
+    toggleCart();
+};
+
+// Start
+init();
