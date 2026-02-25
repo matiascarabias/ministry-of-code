@@ -87,3 +87,71 @@ button { cursor: pointer; border: none; transition: 0.2s; font-family: inherit; 
     width: 100%; background: var(--accent); color: #000;
     padding: 15px; font-weight: 900; margin-top: 20px; border-radius: 8px;
 }
+
+/* Center the entire Hero content */
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* 1. Centered and Larger Typewriter */
+.typewriter {
+    font-size: 3.5rem; /* Increased size */
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
+/* 2. Controls Centering */
+.controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px; /* Space between filter and budget */
+    width: 100%;
+}
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* 3. Larger "ALL_SYSTEMS" / Filters */
+.filter-btn {
+    font-size: 1.1rem; /* Larger font */
+    padding: 12px 24px;
+    letter-spacing: 2px;
+}
+
+/* 4. Larger "MAX_BUDGET" Section */
+.price-filter-box {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.budget-label {
+    font-size: 1.5rem; /* Increased size for Budget */
+    font-weight: 900;
+    margin-bottom: 15px;
+    color: var(--text);
+    letter-spacing: 3px;
+}
+
+.budget-label span {
+    color: var(--accent);
+}
+
+/* Make range slider wider for better control */
+#priceRange {
+    width: 100%;
+    cursor: pointer;
+    accent-color: var(--accent);
+}

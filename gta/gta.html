@@ -21,23 +21,24 @@
         </div>
     </nav>
 
-    <header>
-        <div class="hero-content">
-            <h1 class="typewriter">Build Your <span>Dream</span></h1>
-            <div class="controls-container">
-                <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterByCategory('all', this)">All Parts</button>
-                    <button class="filter-btn" onclick="filterByCategory('popular', this)">🔥 Popular</button>
-                    <button class="filter-btn" onclick="filterByCategory('sale', this)">🏷️ Special Offers</button>
-                </div>
+<header>
+    <div class="hero-content">
+        <h1 class="typewriter">SYSTEM_READY: <span>LOADED</span></h1>
+        
+        <div class="controls-container">
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterByCategory('all', this)">ALL_SYSTEMS</button>
+                <button class="filter-btn" onclick="filterByCategory('popular', this)">⚡ POPULAR</button>
+                <button class="filter-btn" onclick="filterByCategory('sale', this)">🏷️ DISCOUNT</button>
+            </div>
 
-                <div class="price-filter-box">
-                    <label>Budget Limit: <span>$</span><span id="priceLabel">6000</span></label>
-                    <input type="range" id="priceRange" min="0" max="6000" step="50" value="6000">
-                </div>
+            <div class="price-filter-box">
+                <label class="budget-label">MAX_BUDGET: <span>$</span><span id="priceLabel">6000</span></label>
+                <input type="range" id="priceRange" min="0" max="6000" step="50" value="6000">
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <main id="productGrid" class="grid"></main>
 
